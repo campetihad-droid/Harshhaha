@@ -42,4 +42,41 @@ def build_message(user_id, amount, run_time, track_time):
         f"Run Time - {run_time}\n"
         f"Track Time - {track_time}\n\n"
         "Powered By - CashFlix"
+        )
+
+
+async def send_second_message(context, user_id, run_time):
+    await asyncio.sleep(60)
+
+    await context.bot.send_message(
+        chat_id=CHANNEL_ID,
+        text=build_message(
+            user_id,
+            "5",
+            run_time,
+            datetime.now().strftime("%m/%d/%Y %H:%M:%S")
+        )
     )
+
+
+async def send_conversation(context):
+    global running
+
+    while running:
+        for _ in range(10):
+            now = datetime.now()
+            user_id = generate_random_user_id()
+
+            run_time = (now - timedelta(minutes=1)).strftime("%m/%d/%Y %H:%M:%S")
+            track_time = now.strftime("%m/%d/%Y %H:%M:%S")
+
+            await context.bot.send_message(
+                chat_id=CHANNEL_ID,
+                text=build_message(user_id, "0.1", run_time, track_time)
+            )
+
+            asyncio.create_task(
+                send_second_message(context, user_id, run_time)
+            )
+
+        await asyncio.sleep(60)
