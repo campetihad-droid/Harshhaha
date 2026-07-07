@@ -79,7 +79,21 @@ async def send_conversation(context):
                 send_second_message(context, user_id, run_time)
             )
 
-                await asyncio.sleep(60)
+                    await update.message.reply_text("🛑 Test Stopped.")
+
+
+def main():
+    app = Application.builder().token(BOT_TOKEN).build()
+
+    app.add_handler(CommandHandler("test", test))
+    app.add_handler(CommandHandler("stop", stop))
+
+    print("Bot Started...")
+    app.run_polling(close_loop=False)
+
+
+if __name__ == "__main__":
+    main()
 
 
 async def test(update: Update, context: ContextTypes.DEFAULT_TYPE):
