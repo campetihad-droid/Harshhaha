@@ -10,3 +10,39 @@ CHANNEL_ID = "@trackethiad"
 
 running = False
 used_users = []
+user_last_used = {}
+
+def generate_random_user_id():
+    now = datetime.now()
+
+    # 5-10 minute purane users repeat honge
+    repeat_users = [
+        uid for uid, t in user_last_used.items()
+        if 300 <= (now - t).total_seconds() <= 600
+    ]
+
+    if repeat_users and random.randint(1, 100) <= 40:
+        uid = random.choice(repeat_users)
+        user_last_used[uid] = now
+        return uid
+
+    uid = f"{random.randint(6000,9999)}****{random.randint(1000,9999)}"
+
+    while uid in user_last_used:
+        uid = f"{random.randint(6000,9999)}****{random.randint(1000,9999)}"
+
+    user_last_used[uid] = now
+    return uid
+
+
+def build_message(user_id, amount, run_time, track_time):
+    return (
+        "Test Conversation Count 💝\n\n"
+        "🎁 Offer Name - Test\n\n"
+        f"User Id : {user_id}\n"
+        f"User Amount : ₹{amount}\n"
+        "🥳 User Payment : Success\n\n"
+        f"Run Time - {run_time}\n"
+        f"Track Time - {track_time}\n\n"
+        "Powered By - CashFlix"
+    )
