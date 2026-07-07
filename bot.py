@@ -5,7 +5,7 @@ import random
 import asyncio
 import os
 
-BOT_TOKEN = os.getenv("BOT_TOKEN")
+BOT_TOKEN = os.getenv("8751430495:AAHXpZaawS5439_yGPrr8cJwA009Z7PLVcQ")
 CHANNEL_ID = "@trackethiad"
 
 running = False
