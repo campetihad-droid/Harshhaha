@@ -79,4 +79,29 @@ async def send_conversation(context):
                 send_second_message(context, user_id, run_time)
             )
 
-        await asyncio.sleep(60)
+                await asyncio.sleep(60)
+
+
+async def test(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    global running, task
+
+    if running:
+        await update.message.reply_text("⚠️ Test already running.")
+        return
+
+    running = True
+    task = asyncio.create_task(send_conversation(context))
+
+    await update.message.reply_text("✅ Test Started.")
+
+
+async def stop(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    global running, task
+
+    running = False
+
+    if task:
+        task.cancel()
+        task = None
+
+    await update.message.reply_text("🛑 Test Stopped.")
