@@ -79,5 +79,38 @@ async def send_second_message(context, user_id, run_time):
             "5",
             run_time,
             datetime.now().strftime("%m/%d/%Y %H:%M:%S")
-        )
+                )
     )
+
+
+async def test(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    global running
+
+    if running:
+        await update.message.reply_text("⚠️ Test already running.")
+        return
+
+    running = True
+    asyncio.create_task(send_conversation(context))
+    await update.message.reply_text("✅ Test Started.")
+
+
+async def stop(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    global running
+
+    running = False
+    await update.message.reply_text("🛑 Test Stopped.")
+
+
+def main():
+    app = Application.builder().token(BOT_TOKEN).build()
+
+    app.add_handler(CommandHandler("test", test))
+    app.add_handler(CommandHandler("stop", stop))
+
+    print("Bot Started...")
+    app.run_polling()
+
+
+if __name__ == "__main__":
+    main()
