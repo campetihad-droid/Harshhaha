@@ -29,4 +29,17 @@ def generate_random_user_id():
         uid = f"{random.randint(6000,9999)}****{random.randint(1000,9999)}"
         if uid not in user_last_used:
             user_last_used[uid] = now
-            return uid
+                        return uid
+
+
+def build_message(user_id, amount, run_time, track_time):
+    return (
+        "Test Conversation Count 💝\n\n"
+        "🎁 Offer Name - Test\n\n"
+        f"User Id : {user_id}\n"
+        f"User Amount : ₹{amount}\n"
+        "🥳 User Payment : Success\n\n"
+        f"Run Time - {run_time}\n"
+        f"Track Time - {track_time}\n\n"
+        "Powered By - CashFlix"
+    )
